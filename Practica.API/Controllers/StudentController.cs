@@ -16,53 +16,40 @@ namespace Practica.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public List<Student> GetAll()
         {
-            return Ok(_studentService.GetAll());
+            return _studentService.GetAll();
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public Student GetById(int id)
         {
-            var student = _studentService.GetById(id);
-            if (student == null)
-                return NotFound();
-
-            return Ok(student);
+            return _studentService.GetById(id);
         }
 
         [HttpPost]
-        public IActionResult Create(Student student)
-        {
-            var createdStudent = _studentService.Create(student);
-            return CreatedAtAction(nameof(GetById), new { id = createdStudent.Id }, createdStudent);
+        public Student Create(Student student)
+        {            
+            return _studentService.Create(student);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, Student student)
+        public Student Update(int id, Student student)
         {
-            var updatedStudent = _studentService.Update(id, student);
-            if (updatedStudent == null)
-                return NotFound();
-
-            return Ok(updatedStudent);
+            return _studentService.Update(id, student);            
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public Student Delete(int id)
         {
-            var deletedStudent = _studentService.Delete(id);
-            if (deletedStudent == null)
-                return NotFound();
-
-            return Ok(deletedStudent);
+            return _studentService.Delete(id);
         }
 
         [HttpGet("{id}/approval")]
-        public IActionResult HasApproved(int id)
-        {
-            var hasApproved = _studentService.HasApproved(id);
-            return Ok(new { Approved = hasApproved });
+        public Boolean HasApproved(int id)
+        {            
+            return _studentService.HasApproved(id);
         }
+
     }
 }
